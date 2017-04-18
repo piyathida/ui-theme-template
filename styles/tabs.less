@@ -1,57 +1,139 @@
-
-// Tabs
-// -------------------
-
-// Displays selectable tabs above the editor.
-// Overrides: atom/tabs
+@tab-radius: 3px;
+@modified-icon-width: 8px;
+@tab-top-padding: 0;
+@tab-bottom-border-height: 3px;
+@tab-border: 1px solid @tab-border-color;
+@tab-max-width: 160px;
 
 .tab-bar {
-  background-color: @tab-bar-background-color;
-  border-bottom: 1px solid @base-border-color;
+  height: 40px;
+  background: @tab-bar-background-color;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: @tab-bottom-border-height;
+    left: 0;
+    right: 0;
+    background-color: @tab-background-color-active;
+    pointer-events: none;
+  }
 
   .tab {
-    color: @text-color;
+    position: relative;
+    top: @tab-top-padding;
+    max-width: @tab-max-width;
     height: @tab-height;
     line-height: @tab-height;
-    font-size: @font-size;
-    border-right: 1px solid @tab-border-color;
-    background-color: @tab-background-color;
-    &.active {
-      color: @text-color-selected;
-      background-color: @tab-background-color-active;
+    padding: 0;
+    margin: 0 20px 0 10px;
+    color: @text-color;
+    transition: color .1s ease-in;
+    border: none;
+
+    &, &:before, &:after {
+      background: @tab-bar-background-color;
+      height: @tab-height;
     }
 
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      top: 0px;
+      width: 25px;
+      height: @tab-height;
+    }
 
-    // Modified Icon (the blue circle) -------------------
+    // left angled edge
+    &:before {
+      left: -14px;
+    }
+
+    // right angled edge
+    &:after {
+      right: -14px;
+    }
+
+    .close-icon {
+      right: 0;
+      z-index: 3;
+      text-align: right;
+      line-height: @tab-height;
+      color: @text-color;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+
     &.modified:not(:hover) .close-icon {
-      top: 50%;
-      right: @component-padding + 4px; // 4px -> half of icon size
-      margin-top: -3px;
-      border-color: @text-color-info;
-    }
-    &.modified:hover .close-icon {
-      color: currentColor;
+      right: 0;
+      top: @tab-height/2 - @modified-icon-width/2 + 1px;
+      width: @modified-icon-width;
+      height: @modified-icon-width;
     }
 
-
-    // Close Icon (the X) -------------------
-    .close-icon:hover {
-      color: @text-color-selected;
+    &.modified:hover .close-icon:hover {
+      color: @text-color-highlight;
     }
-    &.active .close-icon:hover {
+
+    .title {
+      position: relative;
+      z-index: 1;
+      margin-top: -@tab-top-padding;
+      padding-top: @tab-top-padding;
+      padding-right: 10px;
+    }
+  }
+
+  .tab.active {
+    z-index: 1;
+    color: @text-color-highlight;
+
+    .close-icon {
+      line-height: @tab-height - 1px;
       color: @text-color;
     }
 
+    &, &:before, &:after {
+      background-color: #344966;
+      height: @tab-height;
+    }
 
-    // Dragging -------------------
-    // Styles get applied while dragging a tab
-    &.is-dragging {
-      background: darken(@tab-background-color, 10%);
-      border-color: transparent;
-      opacity: .5;
-      & .close-icon {
-        visibility: hidden;
-      }
+    &:before {
+      // box-shadow: inset 1px 1px 0 @tab-border-color, -4px -4px 4px rgba(0,0,0,.1);
+    }
+
+    &:after {
+      //box-shadow: inset -1px 1px 0 @tab-border-color, 4px -4px 4px rgba(0,0,0,.1);
+    }
+  }
+
+  .tab:hover {
+    color: @text-color-highlight;
+  }
+
+  .tab.active:hover .close-icon {
+    color: @text-color;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  .placeholder {
+    height: @tab-height + @tab-top-padding + @tab-bottom-border-height;
+    margin-left: -9px; // center between tabs
+    pointer-events: none;
+    &:after {
+      top: @tab-height + @tab-top-padding + @tab-bottom-border-height - 2px;
     }
   }
 }

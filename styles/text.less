@@ -1,40 +1,86 @@
+h1,
+h2,
+h3 {
+  line-height: 1em;
+  margin-bottom: 15px
+}
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
 
-// Text
-// -------------------
-
-.text-smaller {
-  font-size: smaller;
+p {
+  line-height: 1.6;
+  margin-bottom: 15px;
 }
 
-.text-subtle    { color: @text-color-subtle; }
-.text-highlight { color: @text-color-highlight; }
+label {
+  font-weight: normal;
+}
 
-.text-info    { color: @text-color-info; }
-.text-success { color: @text-color-success; }
-.text-warning { color: @text-color-warning; }
-.text-error   { color: @text-color-error; }
-
-
-// Highlights ---------------
-
-.highlight         { .highlight-mixin(@background-color-highlight); }
-.highlight-info    { .highlight-mixin(@background-color-info); }
-.highlight-warning { .highlight-mixin(@background-color-warning); }
-.highlight-error   { .highlight-mixin(@background-color-error); }
-.highlight-success { .highlight-mixin(@background-color-success); }
-
-.highlight-mixin(@color) {
-  padding: 1px 4px;
-  color: @text-color-highlight;
+pre {
+  box-shadow: none;
+  color: @text-color;
+  background: @inset-panel-background-color;
   border-radius: @component-border-radius;
-  background-color: @color;
+  border: none;
+  margin: 0;
 }
 
+code {
+  .text(highlight);
+  background: @background-color-highlight;
+  border-radius: @component-border-radius;
+}
 
-// Background Message ---------------
-// Shown when no tabs are open.
+.markdown-preview code {
+  text-shadow: none;
+}
 
-.background-message {
+.selected { .text(highlight); }
+
+.text-smaller { font-size: 0.9em; }
+
+.text-subtle { .text(subtle); }
+.text-highlight { .text(highlight); }
+
+.text-error { .text(error); }
+.text-info {
+  .text(info);
+  &:hover { color: @text-color-info; }
+}
+.text-warning {
+  .text(warning);
+  &:hover { color: @text-color-warning; }
+}
+.text-success {
+  .text(success);
+  &:hover { color: @text-color-success; }
+}
+
+.highlight {
+  color: @text-color-highlight;
   font-weight: bold;
-  color: @text-color-subtle;
+  text-shadow: none;
+  background-color: @background-color-highlight;
+  border-radius: @component-border-radius;
+  padding: 1px 3px;
+}
+
+.highlight-color(@name, @color, @text-color) {
+  .highlight-@{name} {
+    color: lighten(saturate(@text-color, 0%), 30%);
+    font-weight: bold;
+    text-shadow: none;
+    background-color: fadeout(@color, 60%);
+    border-radius: @component-border-radius;
+    padding: 1px 3px;
+  }
+}
+.highlight-color(info, @background-color-info, @text-color-info);
+.highlight-color(warning, @background-color-warning, @text-color-warning);
+.highlight-color(error, @background-color-error, @text-color-error);
+.highlight-color(success, @background-color-success, @text-color-success);
+
+.results-view .path-details.list-item {
+  color: darken(@text-color-highlight, 18%);
 }

@@ -1,20 +1,35 @@
+.tree-view {
+  font-size: @font-size;
+  background: @tree-view-background-color;
 
-// Tree View
-// -------------------
-
-// Used to explore and open files in the current project.
-// Overrides: atom/tree-view
-
-
-.tree-view-resizer {
-  border-right: 1px solid @base-border-color;
+  .selected:before {
+    background: #0091ea;
+    box-shadow: inset -3px 0 0 rgba(0,0,0, .05);
+  }
 }
 
-.tree-view {
-  color: @text-color;
-  background-color: @tree-view-background-color;
+.tree-view-resizer {
+  .tree-view-resize-handle {
+    width: 8px;
+  }
+}
 
-  .list-item.selected {
-    color: @text-color-selected;
+.focusable-panel {
+  opacity: 1;
+  box-shadow: inset -3px 0 0 rgba(0,0,0, .05);
+
+  &:focus {
+    background: #344966;
+
+    .selected:before {
+      background: @background-color-selected;
+    }
+  }
+}
+
+[data-show-on-right-side=true] {
+  .tree-view .selected:before,
+  .focusable-panel {
+    box-shadow: inset 3px 0 0 rgba(0,0,0, .05);
   }
 }
